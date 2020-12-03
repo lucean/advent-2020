@@ -2,6 +2,7 @@ package com.github.lucean.advent2020.solutions;
 
 import com.github.lucean.advent2020.common.io.FileUtils;
 import com.github.lucean.advent2020.common.password.FirstPasswordRule;
+import com.github.lucean.advent2020.common.password.PasswordRule;
 import com.github.lucean.advent2020.common.password.SecondPasswordRule;
 import io.vavr.Tuple2;
 import io.vavr.control.Try;
@@ -21,7 +22,7 @@ public class Day2 {
         var input = Try.of(() -> FileUtils.fileAsList("day2input.txt"))
                        .getOrElse(Collections.emptyList());
 
-        var output = input.stream()
+        var output = input.parallelStream()
                           .map(line -> line.split(":"))
                           .map(arr -> new Tuple2<>(FirstPasswordRule.parse(arr[0]), arr[1]))
                           .filter(t -> t._1.test(t._2))
@@ -34,7 +35,7 @@ public class Day2 {
         var input = Try.of(() -> FileUtils.fileAsList("day2input.txt"))
                        .getOrElse(Collections.emptyList());
 
-        var output = input.stream()
+        var output = input.parallelStream()
                           .map(line -> line.split(":"))
                           .map(arr -> new Tuple2<>(SecondPasswordRule.parse(arr[0]), arr[1]))
                           .filter(t -> t._1.test(t._2))
